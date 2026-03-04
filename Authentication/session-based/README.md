@@ -40,19 +40,19 @@ This project includes:
 ![workflow Page](screenshots/workflow.png)
 
 
-Architecture flow:
+### Architecture Flow
 
-Browser
-↓
-Login Request
-↓
-Server creates Session
-↓
-Session ID stored in Cookie
-↓
-Browser sends Cookie in every request
-↓
-Server verifies session
+- Browser  
+- ↓  
+- Login Request  
+- ↓  
+- Server creates Session  
+- ↓  
+- Session ID stored in Cookie  
+- ↓  
+- Browser sends Cookie in every request  
+- ↓  
+- Server verifies session
 
 ---
 
@@ -130,7 +130,7 @@ git clone https://github.com/Groot-2001/Backend-Projects.git
 Navigate into the project
 
 ```
-cd session-auth-demo
+cd Authentication/session-based
 ```
 
 Install dependencies
@@ -213,15 +213,15 @@ Below is a rough guideline for choosing a session storage solution based on traf
 
 ### Example Production Architecture
 
-Browser
-↓
-Session Cookie (`connect.sid`)
-↓
-Load Balancer
-↓
-Application Servers
-↓
-Redis Session Store
+- Browser
+- ↓
+- Session Cookie (`connect.sid`)
+- ↓
+- Load Balancer
+- ↓
+- Application Servers
+- ↓
+- Redis Session Store
 
 ### Example Redis Session Setup
 
