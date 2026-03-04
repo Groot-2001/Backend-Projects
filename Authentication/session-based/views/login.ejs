@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>aesthetic login • modern</title>
+  <style>
+    /* reset & base */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(145deg, #83e258 0%, #317ef1 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      margin: 0;
+    }
+
+    /* main card – soft, airy, modern */
+    .login-card {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 2rem;
+      box-shadow: 
+        0 20px 40px -12px rgba(0, 20, 50, 0.2),
+        0 8px 24px -6px rgba(0, 32, 64, 0.1),
+        inset 0 1px 1px rgba(255, 255, 255, 0.6);
+      padding: 2.5rem 2rem;
+      width: 100%;
+      max-width: 400px;
+      transition: transform 0.25s ease, box-shadow 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+    }
+
+    .login-card:hover {
+      box-shadow: 
+        0 28px 48px -16px rgba(28, 52, 84, 0.25),
+        0 12px 28px -8px rgba(0, 20, 40, 0.15),
+        inset 0 1px 2px rgba(255,255,255,0.8);
+      transform: translateY(-3px);
+    }
+
+    h2 {
+      font-size: 2rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: #1a2639;
+      margin-bottom: 2rem;
+      text-align: center;
+      background: linear-gradient(130deg, #1e2b4a, #2c3e6e);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* form spacing */
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    /* input group – floating label container */
+    .input-group {
+      position: relative;
+      width: 100%;
+    }
+
+    /* modern input field */
+    .input-group input {
+      width: 100%;
+      padding: 1.3rem 1rem 0.6rem 1rem;  /* top padding leaves room for floating label */
+      border: 1.5px solid rgba(160, 178, 200, 0.3);
+      border-radius: 1.2rem;
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      font-size: 1rem;
+      font-weight: 500;
+      color: #1a2b3e;
+      outline: none;
+      transition: border 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 2px 6px rgba(0, 10, 20, 0.02);
+    }
+
+    .input-group input:hover {
+      background: rgba(255, 255, 255, 0.9);
+      border-color: rgba(120, 140, 180, 0.4);
+    }
+
+    .input-group input:focus {
+      border-color: #5f6cff;
+      background: #ffffff;
+      box-shadow: 0 6px 14px -8px #5f6cff80, 0 0 0 3px rgba(95, 108, 255, 0.15);
+    }
+
+    /* hide the placeholder (only used for detection) */
+    .input-group input::placeholder {
+      color: transparent;
+      user-select: none;
+    }
+
+    /* floating label */
+    .input-group label {
+      position: absolute;
+      left: 1rem;
+      top: 0.9rem;          /* centered when input is empty */
+      font-size: 1rem;
+      font-weight: 450;
+      color: #6f7e96;
+      background: transparent;
+      pointer-events: none;
+      transition: 0.2s ease-out;
+      transform-origin: left center;
+      letter-spacing: 0.01em;
+      padding: 0 0.2rem;
+      line-height: 1.2;
+    }
+
+    /* float label up and scale when input is focused OR has content */
+    .input-group input:focus + label,
+    .input-group input:not(:placeholder-shown) + label {
+      top: 0.3rem;
+      font-size: 0.75rem;
+      color: #5f6cff;
+      font-weight: 550;
+      transform: translateY(0) scale(0.95);
+      text-shadow: 0 1px 2px rgba(255,255,255,0.5);
+    }
+
+    /* keep label floated if input is filled (even if not focused) */
+    .input-group input:not(:placeholder-shown) + label {
+      color: #4f5b9e;
+      opacity: 0.9;
+    }
+
+    /* modern button – soft gradient, smooth */
+    button {
+      background: linear-gradient(115deg, #4b5bec, #5f6cff);
+      border: none;
+      padding: 0.9rem 1.2rem;
+      border-radius: 2rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: white;
+      letter-spacing: 0.3px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 10px 18px -10px #4b5ecc, 0 2px 4px rgba(0,0,0,0.02);
+      margin-top: 1rem;
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    button:hover {
+      background: linear-gradient(115deg, #5a6af0, #6f7cff);
+      box-shadow: 0 18px 26px -14px #3f4ec0, 0 6px 12px -6px #2f3b9e;
+      transform: scale(1.01) translateY(-2px);
+    }
+
+    button:active {
+      transform: scale(0.98) translateY(1px);
+      box-shadow: 0 8px 12px -8px #3f4ec0;
+    }
+
+    /* error message – elegant and soft */
+    .error {
+      color: #d05a6b;
+      background: rgba(255, 240, 245, 0.7);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      border-radius: 3rem;
+      padding: 0.8rem 1.2rem;
+      margin-top: 1.3rem;
+      font-size: 0.9rem;
+      font-weight: 520;
+      text-align: center;
+      border: 1px solid rgba(255, 180, 190, 0.4);
+      box-shadow: 0 2px 10px rgba(200, 80, 100, 0.1);
+      letter-spacing: 0.2px;
+      transition: opacity 0.2s;
+    }
+
+    /* small responsiveness tweaks */
+    @media (max-width: 420px) {
+      .login-card {
+        padding: 2rem 1.5rem;
+        border-radius: 1.8rem;
+      }
+      h2 {
+        font-size: 1.8rem;
+      }
+    }
+
+    /* optional – very subtle background pattern (barely there) */
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: radial-gradient(circle at 30% 40%, rgba(255, 255, 255, 0.2) 0%, transparent 30%),
+                        radial-gradient(circle at 80% 70%, rgba(200, 220, 255, 0.2) 0%, transparent 40%);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .demo-note {
+  margin-top: 0.6rem;
+  font-size: 0.85rem;
+  text-align: center;
+  color: #3f495f;
+  opacity: 0.9;
+  background: rgba(255,255,255,0.55);
+  padding: 0.5rem 0.8rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(160,180,220,0.25);
+  backdrop-filter: blur(4px);
+}
+  </style>
+</head>
+<body>
+
+  <div class="login-card">
+    <h2>Session-Based Login</h2>
+
+    <!-- login form with floating labels & modern aesthetics -->
+    <form action="/login" method="post">
+
+      <div class="input-group">
+        <!-- placeholder is a single space (invisible) — triggers :placeholder-shown logic -->
+        <input type="text" id="username" name="username" placeholder=" " required>
+        <label for="username">Username</label>
+      </div>
+
+      <div class="input-group">
+        <input type="password" id="password" name="password" placeholder=" " required>
+        <label for="password">Password</label>
+      </div>
+
+      <p class="demo-note">
+        username → <strong>user123</strong>, <strong>shiva</strong>, <strong>Raju</strong>  
+        <br>
+        Password → <strong>123</strong>
+      </p>
+
+
+      <button type="submit">log in →</button>
+    </form>
+
+    <!-- error message (styled to match soft aesthetic) -->
+    <% if (error) { %>
+      <p class="error"><%= error %></p>
+    <% } %>
+
+  </div>
+
+</body>
+</html>
