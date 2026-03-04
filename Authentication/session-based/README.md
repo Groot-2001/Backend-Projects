@@ -39,8 +39,6 @@ This project includes:
 
 ![workflow Page](screenshots/workflow.png)
 
----
-
 
 Architecture flow:
 
@@ -126,7 +124,7 @@ project
 Clone the repository
 
 ```
-git clone https://github.com/yourusername/session-auth-demo.git
+git clone https://github.com/Groot-2001/Backend-Projects.git
 ```
 
 Navigate into the project
@@ -192,6 +190,63 @@ Possible enhancements:
 * OAuth login (Google/GitHub)
 
 ---
+
+## 📈 Scaling Considerations (Session Storage)
+
+The default `express-session` **MemoryStore** is useful for development and small demos but does not scale well for real-world applications.
+
+Below is a rough guideline for choosing a session storage solution based on traffic.
+
+| Daily Requests                   | Recommended Session Store                                                       | Reason                                                                               |
+| -------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| **0 – 5,000 requests/day**       | MemoryStore (default)                                                           | Suitable for local development or small demos. Sessions are stored in server memory. |
+| **5,000 – 100,000 requests/day** | Redis                                                                           | Fast in-memory datastore designed for session management and caching.                |
+| **100,000 – 1M+ requests/day**   | Redis Cluster or Managed Redis                                                  | Handles higher concurrency and distributed systems.                                  |
+| **1M+ requests/day**             | Distributed session store (Redis Cluster / DynamoDB / Database-backed sessions) | Required for horizontal scaling across multiple servers.                             |
+
+### Why MemoryStore Is Not Recommended for Production
+
+* Sessions are stored **in server RAM**
+* Memory usage grows with active users
+* Sessions are lost if the server restarts
+* Not shared between multiple servers
+
+### Example Production Architecture
+
+Browser
+↓
+Session Cookie (`connect.sid`)
+↓
+Load Balancer
+↓
+Application Servers
+↓
+Redis Session Store
+
+### Example Redis Session Setup
+
+```javascript
+const session = require("express-session");
+const RedisStore = require("connect-redis").default;
+const redisClient = require("./redis-client");
+
+app.use(
+  session({
+    store: new RedisStore({ client: redisClient }),
+    secret: "your-secret-key",
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: false }
+  })
+);
+```
+
+Redis ensures:
+
+* Faster session retrieval
+* Shared session storage across multiple servers
+* Better scalability for high-traffic applications
+
 
 # 📜 License
 
