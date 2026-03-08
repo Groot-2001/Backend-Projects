@@ -1,5 +1,11 @@
 # Production-Level Token-Based Authentication API
 
+![Node.js](https://img.shields.io/badge/Node.js-Backend-green)
+![Express](https://img.shields.io/badge/Express.js-Framework-black)
+![JWT](https://img.shields.io/badge/Auth-JWT-blue)
+![Security](https://img.shields.io/badge/Security-Helmet%20%7C%20RateLimit-red)
+![License](https://img.shields.io/badge/License-MIT-yellow)
+
 This project provides a secure, token-based authentication system built with **Node.js** and **Express**. It uses **JSON Web Tokens (JWT)** for authentication and implements several security best practices.
 
 ---
@@ -57,6 +63,57 @@ Authentication/token-based/
 | routes      | API endpoints                     |
 
 ---
+
+
+## Authentication Flow
+
+```
+Client
+   │
+   │ Register / Login
+   ▼
+Express API
+   │
+   │ Validate Input (Joi)
+   ▼
+Controller
+   │
+   │ Hash Password (bcrypt)
+   │ Generate Token (JWT)
+   ▼
+Response → JWT Token
+   │
+   │
+Client stores token
+   │
+   │ Authorization: Bearer <token>
+   ▼
+Protected Routes
+   │
+JWT Middleware verifies token
+   ▼
+User Profile Data
+```
+
+## Rate Limiting Protection
+
+The API uses `express-rate-limit` to prevent abuse.
+
+Example limit:
+
+```
+100 requests per 15 minutes per IP
+```
+
+If the limit is exceeded:
+
+```json
+{
+ "status": 429,
+ "message": "Too many requests from this IP, please try again after 15 minutes"
+}
+```
+
 
 # Setup Instructions
 
@@ -265,6 +322,17 @@ Possible enhancements:
 * Role-based access control
 
 ---
+
+## Project Highlights
+
+✔ Secure password hashing using bcrypt
+✔ JWT-based authentication
+✔ Middleware-based route protection
+✔ Rate limiting against brute-force attacks
+✔ Input validation using Joi
+✔ Modular MVC architecture
+✔ Production-grade security middleware
+
 
 # License
 
