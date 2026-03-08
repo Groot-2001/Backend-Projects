@@ -14,6 +14,7 @@ const authMiddleware = (req, res, next) => {
     // Verify token
     const decoded = jwt.verify(token, process.env.JWT_SECRET || 'fallback_secret');
 
+    console.log("Decoded_Payload:",decoded);
     // Add user from payload
     req.user = decoded;
     next();

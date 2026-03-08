@@ -1,5 +1,10 @@
 const users = [];
 
+function logUsers(operation) {
+  console.log(`\n[${operation}] Current Users:`);
+  console.table(users);
+}
+
 class User {
   constructor(username, email, password) {
     this.id = Date.now().toString();
@@ -9,36 +14,38 @@ class User {
   }
 
   static async findByEmail(email) {
-    // Simulating async DB operation
     return new Promise((resolve) => {
       setTimeout(() => {
-        resolve(users.find((user) => user.email === email));
+        const user = users.find((u) => u.email === email);
+        logUsers("findByEmail");
+        resolve(user);
       }, 50);
     });
   }
 
   static async findById(id) {
-    // Simulating async DB operation
     return new Promise((resolve) => {
       setTimeout(() => {
-        resolve(users.find((user) => user.id === id));
+        const user = users.find((u) => u.id === id);
+        logUsers("findById");
+        resolve(user);
       }, 50);
     });
   }
 
   static async save(user) {
-    // Simulating async DB operation
     return new Promise((resolve) => {
       setTimeout(() => {
         users.push(user);
+        logUsers("save");
         resolve(user);
       }, 50);
     });
   }
 
   static clear() {
-      // Clear data for testing purposes
-      users.length = 0;
+    users.length = 0;
+    logUsers("clear");
   }
 }
 

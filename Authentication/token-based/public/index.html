@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JWT Auth · Profile Demo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="auth-wrapper" id="app">
+    <div class="auth-header">
+      <h1><i class="fas fa-flask"></i> Token-based Authentication</h1>
+      <p id="header-subtitle">Step 1: Register or Login</p>
+    </div>
+
+    <!-- Auth forms (visible when logged out) -->
+    <div id="auth-section" class="forms-grid">
+      <div class="auth-card">
+        <div class="card-header">
+          <i class="fas fa-user-plus"></i>
+          <h2>Register</h2>
+        </div>
+        <div class="input-group">
+          <i class="fas fa-user input-icon"></i>
+          <input type="text" id="regUsername" placeholder="Username">
+        </div>
+        <div class="input-group">
+          <i class="fas fa-envelope input-icon"></i>
+          <input type="email" id="regEmail" placeholder="Email">
+        </div>
+        <div class="input-group">
+          <i class="fas fa-lock input-icon"></i>
+          <input type="password" id="regPassword" placeholder="Password">
+        </div>
+        <button id="registerBtn" class="btn btn-primary">
+          <span>Register</span>
+          <i class="fas fa-arrow-right"></i>
+        </button>
+      </div>
+
+      <div class="auth-card">
+        <div class="card-header">
+          <i class="fas fa-sign-in-alt"></i>
+          <h2>Login</h2>
+        </div>
+        <div class="input-group">
+          <i class="fas fa-envelope input-icon"></i>
+          <input type="email" id="loginEmail" placeholder="Email">
+        </div>
+        <div class="input-group">
+          <i class="fas fa-lock input-icon"></i>
+          <input type="password" id="loginPassword" placeholder="Password">
+        </div>
+        <button id="loginBtn" class="btn btn-secondary">
+          <span>Login</span>
+          <i class="fas fa-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Profile section (visible when logged in) -->
+    <div id="profile-section" class="profile-container" style="display: none;">
+      <div class="profile-card">
+        <div class="profile-header">
+          <i class="fas fa-user-circle"></i>
+          <h2>Your Profile</h2>
+        </div>
+        <div class="profile-info">
+          <div class="info-row">
+            <i class="fas fa-user"></i>
+            <span id="profile-username">username</span>
+          </div>
+          <div class="info-row">
+            <i class="fas fa-envelope"></i>
+            <span id="profile-email">email@example.com</span>
+          </div>
+        </div>
+        <button id="logoutBtn" class="btn btn-secondary logout-btn">
+          <i class="fas fa-sign-out-alt"></i>
+          <span>Logout</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Response panel for API messages -->
+    <div class="response-panel">
+      <div class="response-header">
+        <i class="fas fa-code"></i>
+        <h3>Server Response</h3>
+        <button id="clearResponse" class="clear-btn" title="Clear response">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <pre id="response">Ready to authenticate.</pre>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
