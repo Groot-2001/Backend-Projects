@@ -1,77 +1,271 @@
 # Production-Level Token-Based Authentication API
 
-This project provides a secure, token-based authentication system built with Node.js and Express. It uses JSON Web Tokens (JWT) for authentication and implements several security best practices.
+This project provides a secure, token-based authentication system built with **Node.js** and **Express**. It uses **JSON Web Tokens (JWT)** for authentication and implements several security best practices.
 
-## Features
+---
 
-- **User Registration**: Secure password hashing using `bcrypt`.
-- **User Login**: Generates a JSON Web Token (JWT) upon successful login.
-- **Protected Routes**: Middleware to verify JWT tokens and restrict access.
-- **Security Middleware**:
-  - `helmet`: Sets various HTTP headers to secure the app.
-  - `cors`: Enables Cross-Origin Resource Sharing.
-  - `express-rate-limit`: Prevents brute-force attacks and DDoS by limiting repeated requests.
-- **Input Validation**: Uses `joi` to validate request payloads and ensure data integrity.
-- **Mock Database**: Uses an in-memory storage simulation via asynchronous operations to mimic a real database interactions for demonstration purposes.
+# Features
 
-## Architecture
+* **User Registration**
+  Secure password hashing using `bcrypt`.
 
-The project follows the Model-View-Controller (MVC) pattern (without Views since it's an API) to keep the code modular and maintainable.
+* **User Login**
+  Generates a **JSON Web Token (JWT)** upon successful login.
+
+* **Protected Routes**
+  Middleware to verify JWT tokens and restrict access.
+
+* **Security Middleware**
+
+  * `helmet` — Sets various HTTP headers to secure the app
+  * `cors` — Enables Cross-Origin Resource Sharing
+  * `express-rate-limit` — Prevents brute-force attacks and DDoS
+
+* **Input Validation**
+  Uses `joi` to validate request payloads.
+
+* **Mock Database**
+  Uses in-memory storage simulation with async operations to mimic real database interactions.
+
+---
+
+# Architecture
+
+The project follows the **Model-View-Controller (MVC)** pattern (without views since it's an API).
 
 ```
 Authentication/token-based/
-├── server.js                 # Entry point, configures Express app, security, and routes
-├── .env.example              # Example environment variables
-├── package.json              # Project dependencies and scripts
+├── server.js
+├── .env.example
+├── package.json
 └── src/
     ├── controllers/
-    │   └── auth.controller.js  # Contains logic for register, login, and profile fetching
+    │   └── auth.controller.js
     ├── middlewares/
-    │   └── auth.middleware.js  # Middleware to extract and verify JWT
+    │   └── auth.middleware.js
     ├── models/
-    │   └── user.model.js       # Mock User model with methods like findByEmail, save, etc.
+    │   └── user.model.js
     └── routes/
-        └── auth.routes.js      # Defines API endpoints and maps them to controllers
+        └── auth.routes.js
 ```
 
-## Setup Instructions
+| Folder      | Description                       |
+| ----------- | --------------------------------- |
+| controllers | Business logic for authentication |
+| middlewares | JWT authentication middleware     |
+| models      | User model and mock database      |
+| routes      | API endpoints                     |
 
-1.  **Navigate to the project directory:**
-    ```bash
-    cd Authentication/token-based
-    ```
+---
 
-2.  **Install Dependencies:**
-    ```bash
-    npm install
-    ```
+# Setup Instructions
 
-3.  **Environment Variables:**
-    Copy `.env.example` to `.env` and fill in your desired configuration:
-    ```bash
-    cp .env.example .env
-    ```
-    Make sure to change `JWT_SECRET` to a strong, random string in production.
+## 1. Navigate to the project
 
-4.  **Run the Server:**
-    ```bash
-    node server.js
-    ```
-    The server will start on port 3000 (or the port defined in your `.env` file).
+```bash
+cd Authentication/token-based
+```
 
-## API Endpoints
+## 2. Install dependencies
 
--   `POST /api/auth/register`: Register a new user.
-    -   Body: `{ "username": "user123", "email": "user@example.com", "password": "password123" }`
--   `POST /api/auth/login`: Login an existing user and get a JWT.
-    -   Body: `{ "email": "user@example.com", "password": "password123" }`
--   `GET /api/auth/profile`: Get the logged-in user's profile (requires authentication).
-    -   Headers: `Authorization: Bearer <your_jwt_token>`
+```bash
+npm install
+```
 
-## Security Best Practices Included
+## 3. Setup environment variables
 
--   **Password Hashing**: Passwords are never stored in plain text. `bcrypt` adds a salt and hashes the password securely.
--   **Token Expiration**: JWTs have a set expiration time (`JWT_EXPIRES_IN`) to limit the window of opportunity if a token is compromised.
--   **Rate Limiting**: Protects against automated login attempts and general API abuse.
--   **Input Validation**: Validating input before processing prevents unexpected errors and injection attacks.
--   **HTTP Headers**: `helmet` sets headers that protect against common web vulnerabilities like Cross-Site Scripting (XSS) and clickjacking.
+Copy the example file:
+
+```bash
+cp .env.example .env
+```
+
+Update values inside `.env`.
+
+Example:
+
+```
+PORT=3000
+JWT_SECRET=your_super_secret_key
+JWT_EXPIRES_IN=1h
+```
+
+⚠️ Always use a **strong secret key in production**.
+
+---
+
+## 4. Run the server
+
+```bash
+node server.js
+```
+
+Server will start at:
+
+```
+http://localhost:3000
+```
+
+---
+
+# API Endpoints
+
+## Register User
+
+```
+POST /api/auth/register
+```
+
+Request Body
+
+```json
+{
+ "username": "user123",
+ "email": "user@example.com",
+ "password": "password123"
+}
+```
+
+---
+
+## Login User
+
+```
+POST /api/auth/login
+```
+
+Request Body
+
+```json
+{
+ "email": "user@example.com",
+ "password": "password123"
+}
+```
+
+Response
+
+```json
+{
+ "token": "JWT_TOKEN"
+}
+```
+
+---
+
+## Get Profile (Protected Route)
+
+```
+GET /api/auth/profile
+```
+
+Header
+
+```
+Authorization: Bearer <your_jwt_token>
+```
+
+---
+
+# Security Best Practices Included
+
+### Password Hashing
+
+Passwords are hashed using **bcrypt** before storing.
+
+### JWT Expiration
+
+Tokens expire automatically to reduce risk if compromised.
+
+### Rate Limiting
+
+Limits repeated API requests to prevent brute-force attacks.
+
+### Input Validation
+
+Validates user input using `joi`.
+
+### Secure HTTP Headers
+
+`helmet` protects against:
+
+* XSS attacks
+* Clickjacking
+* MIME sniffing
+* Other common vulnerabilities
+
+---
+
+# Screenshots
+
+## Register
+
+![Register](screenshots/register.png)
+
+---
+
+## Login
+
+![Login](screenshots/login.png)
+
+---
+
+## Profile
+
+![Profile](screenshots/profile.png)
+
+---
+
+## Logout
+
+![Logout](screenshots/logout.png)
+
+---
+
+## Email & Password Required Validation
+
+![Email Password Required](screenshots/email-password-required.png)
+
+---
+
+## Incorrect Password
+
+![Password Incorrect](screenshots/password-incorrect.png)
+
+---
+
+## Incorrect Username
+
+![Username Incorrect](screenshots/username-incorrect.png)
+
+---
+
+# Technologies Used
+
+* Node.js
+* Express.js
+* JWT
+* bcrypt
+* Joi
+* Helmet
+* CORS
+* Express Rate Limit
+
+---
+
+# Future Improvements
+
+Possible enhancements:
+
+* Database integration (PostgreSQL / MongoDB)
+* Refresh tokens
+* Redis-based rate limiting
+* Email verification
+* Password reset
+* Role-based access control
+
+---
+
+# License
+
+This project is open source and available under the **MIT License**.
